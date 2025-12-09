@@ -4436,6 +4436,10 @@
       "check": "チェック",
       "check_all_keys": "すべてのキーをチェック",
       "check_multiple_keys": "複数のAPIキーをチェック",
+      "cherryin": {
+        "domestic": "国内",
+        "international": "国際"
+      },
       "copilot": {
         "auth_failed": "Github Copilotの認証に失敗しました。",
         "auth_success": "Github Copilotの認証が成功しました",

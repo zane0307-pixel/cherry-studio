@@ -4436,6 +4436,10 @@
       "check": "檢查",
       "check_all_keys": "檢查所有金鑰",
       "check_multiple_keys": "檢查多個 API 金鑰",
+      "cherryin": {
+        "domestic": "加速域名",
+        "international": "國際域名"
+      },
       "copilot": {
         "auth_failed": "Github Copilot 認證失敗",
         "auth_success": "Github Copilot 認證成功",

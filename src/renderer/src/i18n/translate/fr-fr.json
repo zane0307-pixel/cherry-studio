@@ -4436,6 +4436,10 @@
       "check": "Vérifier",
       "check_all_keys": "Vérifier toutes les clés",
       "check_multiple_keys": "Vérifier plusieurs clés API",
+      "cherryin": {
+        "domestic": "Domestique",
+        "international": "International"
+      },
       "copilot": {
         "auth_failed": "Échec de l'authentification Github Copilot",
         "auth_success": "Authentification Github Copilot réussie",

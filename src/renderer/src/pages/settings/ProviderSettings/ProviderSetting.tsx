@@ -53,6 +53,7 @@ import {
 } from '..'
 import ApiOptionsSettingsPopup from './ApiOptionsSettings/ApiOptionsSettingsPopup'
 import AwsBedrockSettings from './AwsBedrockSettings'
+import CherryINSettings from './CherryINSettings'
 import CustomHeaderPopup from './CustomHeaderPopup'
 import DMXAPISettings from './DMXAPISettings'
 import GithubCopilotSettings from './GithubCopilotSettings'
@@ -106,6 +107,7 @@ const ProviderSetting: FC<Props> = ({ providerId }) => {
 
   const isAzureOpenAI = isAzureOpenAIProvider(provider)
   const isDmxapi = provider.id === 'dmxapi'
+  const isCherryIN = provider.id === 'cherryin'
   const noAPIInputProviders = ['aws-bedrock'] as const satisfies SystemProviderId[]
   const hideApiInput = noAPIInputProviders.some((id) => id === provider.id)
   const noAPIKeyInputProviders = ['copilot', 'vertexai'] as const satisfies SystemProviderId[]
@@ -338,13 +340,16 @@ const ProviderSetting: FC<Props> = ({ providerId }) => {
   }, [provider.anthropicApiHost])
 
   const canConfigureAnthropicHost = useMemo(() => {
+    if (isCherryIN) {
+      return false
+    }
     if (isNewApiProvider(provider)) {
       return true
     }
     return (
       provider.type !== 'anthropic' && isSystemProviderId(provider.id) && isAnthropicCompatibleProviderId(provider.id)
     )
-  }, [provider])
+  }, [isCherryIN, provider])
 
   const anthropicHostPreview = useMemo(() => {
     const rawHost = anthropicApiHost ?? provider.anthropicApiHost
@@ -513,19 +518,23 @@ const ProviderSetting: FC<Props> = ({ providerId }) => {
               </SettingSubtitle>
               {activeHostField === 'apiHost' && (
                 <>
-                  <Space.Compact style={{ width: '100%', marginTop: 5 }}>
-                    <Input
-                      value={apiHost}
-                      placeholder={t('settings.provider.api_host')}
-                      onChange={(e) => setApiHost(e.target.value)}
-                      onBlur={onUpdateApiHost}
-                    />
-                    {isApiHostResettable && (
-                      <Button danger onClick={onReset}>
-                        {t('settings.provider.api.url.reset')}
-                      </Button>
-                    )}
-                  </Space.Compact>
+                  {isCherryIN ? (
+                    <CherryINSettings providerId={provider.id} apiHost={apiHost} setApiHost={setApiHost} />
+                  ) : (
+                    <Space.Compact style={{ width: '100%', marginTop: 5 }}>
+                      <Input
+                        value={apiHost}
+                        placeholder={t('settings.provider.api_host')}
+                        onChange={(e) => setApiHost(e.target.value)}
+                        onBlur={onUpdateApiHost}
+                      />
+                      {isApiHostResettable && (
+                        <Button danger onClick={onReset}>
+                          {t('settings.provider.api.url.reset')}
+                        </Button>
+                      )}
+                    </Space.Compact>
+                  )}
                   {isVertexProvider(provider) && (
                     <SettingHelpTextRow>
                       <SettingHelpText>{t('settings.provider.vertex_ai.api_host_help')}</SettingHelpText>

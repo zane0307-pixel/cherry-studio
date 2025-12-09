@@ -2976,6 +2976,21 @@ const migrateConfig = {
       logger.error('migrate 182 error', error as Error)
       return state
     }
+  },
+  '183': (state: RootState) => {
+    try {
+      state.llm.providers.forEach((provider) => {
+        if (provider.id === SystemProviderIds.cherryin) {
+          provider.apiHost = 'https://open.cherryin.cc'
+          provider.anthropicApiHost = 'https://open.cherryin.cc'
+        }
+      })
+      logger.info('migrate 183 success')
+      return state
+    } catch (error) {
+      logger.error('migrate 183 error', error as Error)
+      return state
+    }
   }
 }
 
