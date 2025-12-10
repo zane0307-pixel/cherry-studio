@@ -2985,6 +2985,7 @@ const migrateConfig = {
           provider.anthropicApiHost = 'https://open.cherryin.cc'
         }
       })
+      state.llm.providers = moveProvider(state.llm.providers, SystemProviderIds.poe, 10)
       logger.info('migrate 183 success')
       return state
     } catch (error) {
